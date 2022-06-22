@@ -2,7 +2,7 @@
 
 **WalkThru is a better way of explaining code on the web.**
 
-Check out the [live demo](https://walkthru.netlify.app) to see how it works.
+Check out the [live demo](https://walkthru.netlify.app/walkthru-intro) to see how it works.
 
 See the [live demo source code](https://github.com/walkthru/next) if you want to see an implementation example using Next.js. 
 
