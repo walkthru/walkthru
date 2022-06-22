@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  }
+}

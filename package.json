@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "8.16.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0"
+  },
+  "scripts": {
+    "lint": "eslint packages/data/src packages/react/src"
+  }
+}

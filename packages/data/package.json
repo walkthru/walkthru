@@ -1,0 +1,46 @@
+{
+  "name": "@walkthru/data",
+  "version": "0.1.0",
+  "description": "A better way of explaining code on the web",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/walkthru/walkthu.git",
+    "directory": "packages/react"
+  },
+  "author": "Anthony Gore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/walkthru/walkthru/issues"
+  },
+  "homepage": "https://github.com/walkthru/walkthru#readme",
+  "keywords": [
+    "tutorial"
+  ],
+  "private": false,
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup": "^2.75.6",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-import-css": "^3.0.3",
+    "rollup-plugin-node-externals": "^4.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4"
+  },
+  "dependencies": {
+    "octokit": "^1.7.1",
+    "front-matter": "^4.0.2"
+  }
+}
