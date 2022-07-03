@@ -26,7 +26,7 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 }
 
 const ButtonWrapper = styled.div`
-  margin-top: 1.25rem;
+  margin-top: 1rem;
   justify-content: flex-start;
   display: flex;
 `
@@ -53,9 +53,23 @@ const Button = styled.button`
   }
 `
 
+const ContentWrapper = styled.div`
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+
+const Wrapper = styled.div`
+  min-height: 0;
+  height: 100%;
+`
+
 const contentStyle = {
   paddingLeft: '0.25rem',
   paddingRight: '0.5rem',
+  overflow: 'scroll',
 }
 
 function RightArrow({ className }) {
@@ -86,22 +100,18 @@ function WTContent({ step, nextStepSlug, classes }) {
   function next() {
     window.location.hash = nextStepSlug
   }
+  function createHtml(markdown) {
+    return md.render(markdown)
+  }
   const ref = useRef()
-  const [html, setHtml] = useState(md.render(step.content))
+  const [html, setHtml] = useState(createHtml(step.content))
   useEffect(() => {
     ref.current.scrollTo(0, 0)
-    setHtml(md.render(step.content))
+    setHtml(createHtml(step.content))
   }, [step])
   return (
-    <div style={{ overflow: 'hidden' }}>
-      <div
-        style={{
-          minHeight: 0,
-          height: '100%',
-          overflow: 'auto',
-        }}
-        ref={ref}
-      >
+    <Wrapper>
+      <ContentWrapper ref={ref}>
         <div
           className={classes}
           style={contentStyle}
@@ -117,8 +127,8 @@ function WTContent({ step, nextStepSlug, classes }) {
             <></>
           )}
         </ButtonWrapper>
-      </div>
-    </div>
+      </ContentWrapper>
+    </Wrapper>
   )
 }
 

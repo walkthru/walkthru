@@ -104,9 +104,34 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
       e.stopPropagation()
       e.stopImmediatePropagation()
     }
+
     el.addEventListener('touchstart', preventDefault, { passive: false })
     el.addEventListener('touchmove', preventDefault, { passive: false })
   }, [])
+  useEffect(() => {
+    function keyDown(e) {
+      switch (e.keyCode) {
+        // enter
+        case 13:
+          setShowCodeMobile(!showCodeMobile)
+          break
+        // left
+        case 37:
+          if (!showCodeMobile && prevStep.slug) {
+            window.location.hash = prevStep.slug
+          }
+          break
+        // right
+        case 39:
+          if (!showCodeMobile && nextStep.slug) {
+            window.location.hash = nextStep.slug
+          }
+          break
+      }
+    }
+    window.addEventListener('keydown', keyDown)
+    return () => window.removeEventListener('keydown', keyDown)
+  }, [prevStep, nextStep, showCodeMobile])
   return (
     <>
       <Wrapper ref={ref}>
@@ -121,6 +146,7 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
             />
             <WTContent
               step={step}
+              prevStepSlug={prevStep ? prevStep.slug : null}
               nextStepSlug={nextStep ? nextStep.slug : null}
               classes={classes.instructions}
             />
