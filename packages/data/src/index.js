@@ -7,28 +7,29 @@ async function loadCode(owner, repo, files, ref, ghpat) {
     auth: ghpat,
   })
   const p = Promise.all(
-    files.map((path) => octokit.request(
-      `GET /repos/{owner}/{repo}/contents/{path}?ref=${ref}`,
-      {
+    files.map((path) =>
+      octokit.request(`GET /repos/{owner}/{repo}/contents/{path}?ref=${ref}`, {
         owner,
         repo,
         path,
-      }
-    ))
+      })
+    )
   )
   let data
   try {
     data = await p
     return data.map((item) => {
-      let buff = new Buffer(item.data.content, 'base64')
+      let buff = Buffer.from(item.data.content, 'base64')
       return {
         path: item.data.path,
-        content: buff.toString('ascii'),
+        content: buff.toString(),
       }
     })
   } catch (err) {
     if (err.status === 401) {
-      throw new Error('Error connecting to GitHub API. Check your personal access token.')
+      throw new Error(
+        'Error connecting to GitHub API. Check your personal access token.'
+      )
     }
     if (err.status === 404) {
       throw new Error(`GitHub error. 404 file not found: ${err.request.url}`)
@@ -59,12 +60,11 @@ function focusValid(focus) {
 async function loadStepContent(tutorial, step) {
   let md
   try {
-    md = await readFile(
-      `${process.cwd()}/walkthru/${tutorial}/${step}.md`,
-      { encoding: 'utf-8' }
-    )
+    md = await readFile(`${process.cwd()}/walkthru/${tutorial}/${step}.md`, {
+      encoding: 'utf-8',
+    })
   } catch (err) {
-    throw new Error(`Failed to find or parse step ${step} in ${tutorial}.`)
+    throw new Error(`Failed to find or parse step "${step}" in "${tutorial}".`)
   }
   let stepContent
   try {
@@ -74,52 +74,63 @@ async function loadStepContent(tutorial, step) {
       frontmatter: fm(md).attributes,
     }
   } catch (err) {
-    throw new Error(`Step ${step} in ${tutorial} is invalid.`)
+    throw new Error(`Step "${step}" in "${tutorial}" is invalid.`)
   }
   if (Object.getOwnPropertyNames(stepContent.frontmatter).length === 0) {
-    throw new Error(`Step ${step} in ${tutorial} is missing frontmatter.`)
+    throw new Error(`Step "${step}" in "${tutorial}" is missing frontmatter.`)
   }
   if (!stepContent.frontmatter.title) {
-    throw new Error(`Step ${step} in ${tutorial} is missing title property.`)
+    throw new Error(
+      `Step "${step}" in "${tutorial}" is missing "title" property.`
+    )
   }
   if (!stepContent.frontmatter.file) {
-    throw new Error(`Step ${step} in ${tutorial} is missing file property.`)
+    throw new Error(
+      `Step "${step}" in "${tutorial}" is missing "file" property.`
+    )
   }
   if (!focusValid(stepContent.frontmatter.focus)) {
-    throw new Error(`focus property in ${step} in ${tutorial} is invalid.`)
+    throw new Error(
+      `"focus" property in "${step}" in "${tutorial}" is invalid.`
+    )
   }
   const center = stepContent.frontmatter.center
   if (center && center < 0) {
-    throw new Error(`center property in ${step} in ${tutorial} is invalid.`)
+    throw new Error(
+      `"center" property in "${step}" in "${tutorial}" is invalid.`
+    )
   }
   return stepContent
 }
 
 async function loadConfigFile(name) {
   try {
-    const json = await readFile(`${process.cwd()}/walkthru/${name}/config.json`, {
-      encoding: 'utf-8',
-    })
+    const json = await readFile(
+      `${process.cwd()}/walkthru/${name}/config.json`,
+      {
+        encoding: 'utf-8',
+      }
+    )
     return JSON.parse(json)
   } catch (err) {
-    throw new Error(`Failed to find or parse config.json file for ${name}.`)
+    throw new Error(`Failed to find or parse config.json file for "${name}".`)
   }
 }
 
 async function checkTutorialExists(name) {
   try {
     return await access(`${process.cwd()}/walkthru/${name}`)
-  } catch {
+  } catch (err) {
     throw new Error(`Could not find tutorial directory ./walkthru/${name}.`)
   }
 }
 
 async function checkConfigValid(config, name) {
   if (!config.title) {
-    throw new Error(`Config for ${name} is missing title property.`)
+    throw new Error(`Config for "${name}" is missing "title" property.`)
   }
   if (!config.code) {
-    throw new Error(`Config for ${name} is missing code property.`)
+    throw new Error(`Config for "${name}" is missing "code" property.`)
   }
   return true
 }
@@ -147,11 +158,13 @@ async function getCode(config, instructions, ghpat) {
 }
 
 async function getData(name, ghpat) {
+  console.log(`Compiling ${name}...`)
   await checkTutorialExists(name)
   const config = await loadConfigFile(name)
   await checkConfigValid(config, name)
   const instructions = await getInstructions(config.steps, name)
   const code = await getCode(config, instructions, ghpat)
+  console.log(`Successfully compiled ${name}.`)
   return { code, instructions, config }
 }
 
