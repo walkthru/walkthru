@@ -1,30 +1,25 @@
 import styled from 'styled-components'
+import {useState} from "react";
 
 const Wrapper = styled.div`
   max-height: ${(props) => props.height}%;
-  display: inline-block;
+  height: ${(props) => props.height}%;
   border-width: 1px;
-  border-color: ${(props) =>
-    props.borderColor ? props.borderColor : 'rgb(229, 231, 235)'};
+  border-color: ${({ borderColor }) => (borderColor ? borderColor : 'rgb(229, 231, 235)')};
+  background-color: ${({ bgColor }) => (bgColor ? bgColor : 'rgb(255, 255, 255)')};
   border-radius: 0.25rem;
-  background-color: ${(props) =>
-    props.bgColor ? props.bgColor : 'rgb(255, 255, 255)'};
-  background-image: url('${({ src }) => src}');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  overflow: auto;
+  white-space: nowrap;
+  display: flex; 
 `
 
-/*
- * This image element is invisible (opacity 0). It's used as a hack for getting the height correct.
- */
 const Image = styled.img`
-  height: 100%;
-  opacity: 0;
-  margin: 0 auto;
+  object-fit: ${({ zoom }) => (zoom ? 'none' : 'contain' )};
+  max-width: ${({ zoom }) => (zoom ? 'initial' : '100%' )};
 `
 
 function WTImage({ height, image }) {
+  const [zoom, setZoom] = useState(false)
   if (!image) {
     return <div />
   }
@@ -34,8 +29,9 @@ function WTImage({ height, image }) {
       bgColor={image.bgColor}
       borderColor={image.borderColor}
       src={image.src}
+      onClick={() => setZoom(!zoom)}
     >
-      <Image src={image.src} />
+      <Image src={image.src} zoom={zoom} />
     </Wrapper>
   )
 }
