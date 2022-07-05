@@ -80,11 +80,15 @@ file: walkthru/my-walkthru/app.jsx
 ```
 
 Frontmatter options:
-- `title`. The title of the step.
+- `title`. The title of the step (required).
 - `file`. The repo file you want to use as the code example.
-- `language`. The language of the code example. Not required. No need to set this if the language can be determined from the file extension e.g. `js`.
-- `focus`. The line or range of lines to focus on e.g. `7`, `7-11`. Not required.
-- `center`. The line to center the code example on e.g. `9`. Not required. Tip: probably you would use the middle line of the focus range.
+- `language`. The language of the code example. No need to set this if the language can be determined from the file extension e.g. `js`.
+- `focus`. The line or range of lines to focus on e.g. `7`, `7-11`.
+- `center`. The line to center the code example on e.g. `9`. Tip: probably you would use the middle line of the focus range.
+- `image`
+  - `src`. The URL of the image (required if using `image`).
+  - `bgColor`. Defaults to `rgb(255,255,255)`.
+  - `borderColor`. Defaults to `rgb(229, 231, 235)`.
 
 ### Usage in an app
 

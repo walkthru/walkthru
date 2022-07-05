@@ -5,16 +5,6 @@ import theme from './okaidia'
 import styled from 'styled-components'
 import WTFileBar from './WTFileBar'
 
-const CodeWrapper = styled.div`
-  --tw-bg-opacity: 1;
-  background-color: rgb(28 25 23 / var(--tw-bg-opacity));
-  border-radius: 0.25rem;
-  flex-direction: column;
-  width: 100%;
-  display: flex;
-  position: relative;
-`
-
 const Pre = styled.pre`
   overflow-y: auto;
   margin: 0;
@@ -138,7 +128,7 @@ function WTCode({ files, step, sameFile, config }) {
     ref.current.scrollTo(0, 0)
   }, [])
   return (
-    <CodeWrapper>
+    <>
       <WTFileBar files={files} activeFile={activeFile} config={config} />
       <Highlight
         {...defaultProps}
@@ -204,7 +194,7 @@ function WTCode({ files, step, sameFile, config }) {
           )
         }}
       </Highlight>
-    </CodeWrapper>
+    </>
   )
 }
 

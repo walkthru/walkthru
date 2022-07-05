@@ -84,9 +84,9 @@ async function loadStepContent(tutorial, step) {
       `Step "${step}" in "${tutorial}" is missing "title" property.`
     )
   }
-  if (!stepContent.frontmatter.file) {
+  if (typeof stepContent.frontmatter.image !== 'undefined' && (!stepContent.frontmatter.image || typeof stepContent.frontmatter.image.src === 'undefined')) {
     throw new Error(
-      `Step "${step}" in "${tutorial}" is missing "file" property.`
+      `Step "${step}" in "${tutorial}" is missing "image" "src" property.`
     )
   }
   if (!focusValid(stepContent.frontmatter.focus)) {
@@ -144,7 +144,9 @@ async function getInstructions(steps, name) {
 }
 
 async function getCode(config, instructions, ghpat) {
-  const files = instructions.map((i) => i.frontmatter.file)
+  const files = instructions
+    .filter((i) => i.frontmatter.file)
+    .map((i) => i.frontmatter.file)
   let uniqueFiles = files.filter((file, index) => {
     return files.indexOf(file) === index
   })
