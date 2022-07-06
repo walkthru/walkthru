@@ -11,8 +11,6 @@ const Wrapper = styled.div`
     bgColor ? bgColor : 'rgb(255, 255, 255)'};
   border-radius: 0.25rem;
   overflow: auto;
-  white-space: nowrap;
-  display: flex;
 `
 
 const Image = styled.img`
@@ -20,6 +18,7 @@ const Image = styled.img`
   cursor: ${({ zoom }) => (zoom ? 'zoom-out' : 'zoom-in')};
   height: ${({ imgHeight }) => (imgHeight)}px;
   width: ${({ imgWidth }) => (imgWidth)}px;
+  margin: 0 auto;
 `
 
 function WTImage({ containerHeight, step }) {
@@ -32,21 +31,24 @@ function WTImage({ containerHeight, step }) {
     setZoom(false)
   }, [step])
   useEffect(() => {
-    const imgNaturalHeight = ref.current.naturalHeight
-    const imgNaturalWidth = ref.current.naturalWidth
-    if (zoom) {
-      setImgHeight(imgNaturalHeight)
-      setImgWidth(imgNaturalWidth)
-    } else {
-      const wrapperHeight = ref.current.parentElement.clientHeight
-      const wrapperWidth = ref.current.parentElement.clientWidth
-      const heightBasedScale = wrapperHeight / imgNaturalHeight
-      const widthBasedScale = wrapperWidth / imgNaturalWidth
-      const scale = (heightBasedScale * imgNaturalWidth < wrapperWidth) ? heightBasedScale : widthBasedScale
-      setImgHeight(scale * imgNaturalHeight)
-      setImgWidth(scale * imgNaturalWidth)
+    if (image) {
+      const imgNaturalHeight = ref.current.naturalHeight
+      const imgNaturalWidth = ref.current.naturalWidth
+      if (zoom) {
+        setImgHeight(imgNaturalHeight)
+        setImgWidth(imgNaturalWidth)
+      } else {
+        const parentStyle = getComputedStyle(ref.current.parentElement)
+        const wrapperHeight = ref.current.parentElement.offsetHeight - parseInt(parentStyle.borderTopWidth) - parseInt(parentStyle.borderBottomWidth)
+        const wrapperWidth = ref.current.parentElement.offsetWidth - parseInt(parentStyle.borderLeftWidth) - parseInt(parentStyle.borderRightWidth)
+        const heightBasedScale = wrapperHeight / imgNaturalHeight
+        const widthBasedScale = wrapperWidth / imgNaturalWidth
+        const scale = (heightBasedScale * imgNaturalWidth < wrapperWidth) ? heightBasedScale : widthBasedScale
+        setImgHeight(scale * imgNaturalHeight)
+        setImgWidth(scale * imgNaturalWidth)
+      }
     }
-  }, [image, ref, zoom])
+  }, [step, containerHeight, ref, zoom])
   if (!image) {
     return <div />
   }
