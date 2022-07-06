@@ -28,7 +28,8 @@ const LineNumbers = styled.div`
 
 const Lines = styled.div`
   flex-grow: 1;
-  overflow: scroll;
+  overflow: auto;
+  ::-webkit-scrollbar { display: none; }
 `
 
 const Highlightable = styled.div`

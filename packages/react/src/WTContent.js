@@ -69,7 +69,7 @@ const Wrapper = styled.div`
 const contentStyle = {
   paddingLeft: '0.25rem',
   paddingRight: '0.5rem',
-  overflow: 'scroll',
+  overflow: 'auto',
 }
 
 function RightArrow({ className }) {
