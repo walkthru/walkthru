@@ -180,10 +180,7 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
               config={config}
               height={paneHeights.code}
             />
-            <WTImage
-              height={paneHeights.image}
-              image={step.frontmatter.image}
-            />
+            <WTImage height={paneHeights.image} step={step} />
           </ColRight>
         </Cols>
       </Wrapper>

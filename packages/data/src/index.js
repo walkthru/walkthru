@@ -84,7 +84,11 @@ async function loadStepContent(tutorial, step) {
       `Step "${step}" in "${tutorial}" is missing "title" property.`
     )
   }
-  if (typeof stepContent.frontmatter.image !== 'undefined' && (!stepContent.frontmatter.image || typeof stepContent.frontmatter.image.src === 'undefined')) {
+  if (
+    typeof stepContent.frontmatter.image !== 'undefined' &&
+    (!stepContent.frontmatter.image ||
+      typeof stepContent.frontmatter.image.src === 'undefined')
+  ) {
     throw new Error(
       `Step "${step}" in "${tutorial}" is missing "image" "src" property.`
     )
