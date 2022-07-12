@@ -1,6 +1,6 @@
 {
   "name": "@walkthru/data",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "A better way of explaining code on the web",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -38,9 +38,11 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-import-css": "^3.0.3",
     "rollup-plugin-node-externals": "^4.0.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4"
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "octokit": "^1.7.1",
+    "front-matter": "^4.0.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "octokit": "^1.7.1",
     "front-matter": "^4.0.2"
   }
