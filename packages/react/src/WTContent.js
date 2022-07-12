@@ -46,6 +46,7 @@ const Button = styled.button`
   border-radius: 0.25rem;
   display: flex;
   gap: 0.25rem;
+  border: none;
   @supports (-webkit-touch-callout: none) and (not (translate: none)) {
     & > * + * {
       margin-left: 0.25rem;
@@ -66,12 +67,6 @@ const Wrapper = styled.div`
   height: 100%;
 `
 
-const contentStyle = {
-  paddingLeft: '0.25rem',
-  paddingRight: '0.5rem',
-  overflow: 'auto',
-}
-
 function RightArrow({ className }) {
   return (
     <svg
@@ -91,12 +86,18 @@ function RightArrow({ className }) {
   )
 }
 
+const styleBase = {
+  paddingLeft: '0.25rem',
+  paddingRight: '0.5rem',
+  overflow: 'auto'
+}
+
 const RightArrowStyled = styled(RightArrow)`
   height: 1rem;
   width: 1rem;
 `
 
-function WTContent({ step, nextStepSlug, classes }) {
+function WTContent({ step, nextStepSlug, styles }) {
   function next() {
     window.location.hash = nextStepSlug
   }
@@ -109,12 +110,12 @@ function WTContent({ step, nextStepSlug, classes }) {
     ref.current.scrollTo(0, 0)
     setHtml(createHtml(step.content))
   }, [step])
+  const style = styles(styleBase)
   return (
     <Wrapper>
       <ContentWrapper ref={ref}>
         <div
-          className={classes}
-          style={contentStyle}
+          style={style}
           dangerouslySetInnerHTML={{ __html: html }}
         ></div>
         <ButtonWrapper>

@@ -1,7 +1,14 @@
-import Select from 'react-select'
+import createCache from '@emotion/cache'
+import Select, { NonceProvider } from 'react-select'
 import { useState, useEffect } from 'react'
 
-function WTSelect({ tutorialSlug, stepSlug, steps, title, classes }) {
+class MyNonceProvider extends NonceProvider {
+  createEmotionCache = (nonce) => {
+    return createCache({ nonce, container: this.props.container, key: 'react-select' });
+  };
+}
+
+function WTSelect({ tutorialSlug, stepSlug, steps, title }) {
   function navigate({ value }) {
     if (value) {
       window.location.hash = value
@@ -28,47 +35,49 @@ function WTSelect({ tutorialSlug, stepSlug, steps, title, classes }) {
     fontSize: '14px !important',
     color: 'hsl(0, 0%, 20%)',
   }
+  const shadowRootNode = document.querySelector('#shadow-root').shadowRoot
   return (
-    <Select
-      className={classes}
-      value={value}
-      onChange={navigate}
-      options={options}
-      isSearchable={false}
-      styles={{
-        container: (base) => {
-          return {
+    <MyNonceProvider container={shadowRootNode}>
+      <Select
+        value={value}
+        onChange={navigate}
+        options={options}
+        isSearchable={false}
+        styles={{
+          container: (base) => {
+            return {
+              ...base,
+              ...selectStyles,
+              lineHeight: '1rem',
+            }
+          },
+          input: (base) => ({
             ...base,
             ...selectStyles,
-            lineHeight: '1rem',
-          }
-        },
-        input: (base) => ({
-          ...base,
-          ...selectStyles,
-          'input:focus': {
+            'input:focus': {
+              boxShadow: 'none',
+              borderColor: 'inherit',
+            },
+          }),
+          control: (base) => ({
+            ...base,
+            ...selectStyles,
             boxShadow: 'none',
             borderColor: 'inherit',
+          }),
+          groupHeading: () => {
+            return {
+              ...selectStyles,
+              borderBottom: '1px solid',
+              paddingBottom: '0.75rem',
+              textTransform: 'none',
+              margin: '0 12px 0.75rem 12px',
+              fontWeight: 'bold',
+            }
           },
-        }),
-        control: (base) => ({
-          ...base,
-          ...selectStyles,
-          boxShadow: 'none',
-          borderColor: 'inherit',
-        }),
-        groupHeading: () => {
-          return {
-            ...selectStyles,
-            borderBottom: '1px solid',
-            paddingBottom: '0.75rem',
-            textTransform: 'none',
-            margin: '0 12px 0.75rem 12px',
-            fontWeight: 'bold',
-          }
-        },
-      }}
-    />
+        }}
+      />
+    </MyNonceProvider>
   )
 }
 

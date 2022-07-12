@@ -5,6 +5,7 @@ import WTCodeWrapper from './WTCodeWrapper'
 import styled from 'styled-components'
 import WTDrawer from './WTDrawer'
 import WTImage from './WTImage'
+import root from 'react-shadow/styled-components'
 
 const Wrapper = styled.div`
   gap: 1rem;
@@ -90,7 +91,7 @@ function getPaneHeights(hasCode, hasImage) {
   }
 }
 
-function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
+function WalkThru({ data, tutorialSlug, stepSlug, instructionsStyle }) {
   const { code, instructions, config } = data
   const stepIndex = instructions.findIndex((step) => step.slug === stepSlug)
   const [lastStepFile, setLastStepFile] = useState('')
@@ -100,6 +101,7 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
   const [showCodeMobile, setShowCodeMobile] = useState(false)
   const hasCode = step.frontmatter.file && step.frontmatter.file.length
   const hasImage = !!step.frontmatter.image
+  const ref = useRef()
   const [paneHeights, setPaneHeights] = useState(
     getPaneHeights(hasCode, hasImage)
   )
@@ -112,17 +114,21 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
       setLastStepFile(instructions[stepIndex - 1].frontmatter.file)
     }
   }, [stepSlug, instructions])
-  const ref = useRef()
   useEffect(() => {
     const el = ref.current
     function preventDefault(e) {
       e.stopPropagation()
       e.stopImmediatePropagation()
     }
-
-    el.addEventListener('touchstart', preventDefault, { passive: false })
-    el.addEventListener('touchmove', preventDefault, { passive: false })
-  }, [])
+    if (el) {
+      el.addEventListener('touchstart', preventDefault, { passive: false })
+      el.addEventListener('touchmove', preventDefault, { passive: false })
+    }
+    return () => {
+      el.removeEventListener('touchstart', preventDefault, { passive: false })
+      el.removeEventListener('touchmove', preventDefault, { passive: false })
+    }
+  }, [ref.current])
   useEffect(() => {
     function keyDown(e) {
       switch (e.keyCode) {
@@ -144,8 +150,8 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
           break
       }
     }
-    window.addEventListener('keydown', keyDown)
-    return () => window.removeEventListener('keydown', keyDown)
+    // window.addEventListener('keydown', keyDown)
+    // return () => window.removeEventListener('keydown', keyDown)
   }, [prevStep, nextStep, showCodeMobile])
   useEffect(() => {
     const hasCode = step.frontmatter.file && step.frontmatter.file.length
@@ -153,7 +159,7 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
     setPaneHeights(getPaneHeights(hasCode, hasImage))
   }, [step])
   return (
-    <>
+    <root.div id="shadow-root">
       <Wrapper ref={ref}>
         <Cols showCodeMobile={showCodeMobile}>
           <ColLeft>
@@ -162,13 +168,12 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
               stepSlug={stepSlug}
               steps={instructions}
               title={config.title}
-              classes={classes.select}
             />
             <WTContent
               step={step}
               prevStepSlug={prevStep ? prevStep.slug : null}
               nextStepSlug={nextStep ? nextStep.slug : null}
-              classes={classes.instructions}
+              styles={instructionsStyle}
             />
           </ColLeft>
           <ColRight gap={paneHeights.image === 50}>
@@ -184,7 +189,7 @@ function WalkThru({ data, tutorialSlug, stepSlug, classes }) {
           </ColRight>
         </Cols>
       </Wrapper>
-    </>
+    </root.div>
   )
 }
 
