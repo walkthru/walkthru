@@ -29,7 +29,9 @@ const LineNumbers = styled.div`
 const Lines = styled.div`
   flex-grow: 1;
   overflow: auto;
-  ::-webkit-scrollbar { display: none; }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Highlightable = styled.div`
@@ -94,7 +96,7 @@ function scrollNewCenter(center, el) {
     const lineHeight = codeEl.offsetHeight / count
     const scrollPos = lineHeight * center - el.offsetHeight / 2
     animateScroll.scrollTo(scrollPos, {
-      containerId: 'scrollContainer',
+      container: el,
       duration: 500,
     })
   }
@@ -117,7 +119,7 @@ function WTCode({ files, step, sameFile, config }) {
     let scrollPos = 0
     if (sameFile) {
       animateScroll.scrollTo(prevScrollPos, {
-        containerId: 'scrollContainer',
+        container: ref.current,
         duration: 0,
       })
       scrollPos = ref.current.scrollTop
@@ -144,7 +146,6 @@ function WTCode({ files, step, sameFile, config }) {
               className={`${className} ${
                 highlightedLines.length ? '' : 'no-highlight'
               }`}
-              id="scrollContainer"
             >
               <Code>
                 <LineNumbers>

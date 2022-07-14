@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import WTSelect from './WTSelect'
-import WTContent from './WTContent'
+import WTInstructions from './WTInstructions'
 import WTCodeWrapper from './WTCodeWrapper'
 import styled from 'styled-components'
 import WTDrawer from './WTDrawer'
@@ -91,8 +91,18 @@ function getPaneHeights(hasCode, hasImage) {
   }
 }
 
-function WalkThru({ data, tutorialSlug, stepSlug, instructionsStyle }) {
+function getStepSlugFromHash(config) {
+  const { hash } = window.location
+  let step = hash ? hash.split('#')[1] : config.steps[0]
+  if (config.steps.find((slug) => slug === step) === undefined) {
+    step = config.steps[0]
+  }
+  return step
+}
+
+function WalkThru({ data, tutorialSlug, instructionsStyle }) {
   const { code, instructions, config } = data
+  const stepSlug = getStepSlugFromHash(config)
   const stepIndex = instructions.findIndex((step) => step.slug === stepSlug)
   const [lastStepFile, setLastStepFile] = useState('')
   const [step, setStep] = useState(instructions[stepIndex])
@@ -106,14 +116,20 @@ function WalkThru({ data, tutorialSlug, stepSlug, instructionsStyle }) {
     getPaneHeights(hasCode, hasImage)
   )
   useEffect(() => {
-    const stepIndex = instructions.findIndex((step) => step.slug === stepSlug)
-    setStep(instructions[stepIndex])
-    setNextStep(instructions[stepIndex + 1])
-    setPrevStep(instructions[stepIndex - 1])
-    if (stepIndex > 0) {
-      setLastStepFile(instructions[stepIndex - 1].frontmatter.file)
+    function hashChange() {
+      const stepSlug = getStepSlugFromHash(config)
+      console.log(stepSlug)
+      const stepIndex = instructions.findIndex((step) => step.slug === stepSlug)
+      setStep(instructions[stepIndex])
+      setNextStep(instructions[stepIndex + 1])
+      setPrevStep(instructions[stepIndex - 1])
+      if (stepIndex > 0) {
+        setLastStepFile(instructions[stepIndex - 1].frontmatter.file)
+      }
     }
-  }, [stepSlug, instructions])
+    window.addEventListener('hashchange', hashChange)
+    return () => window.removeEventListener('hashchange', hashChange)
+  }, [])
   useEffect(() => {
     const el = ref.current
     function preventDefault(e) {
@@ -123,10 +139,10 @@ function WalkThru({ data, tutorialSlug, stepSlug, instructionsStyle }) {
     if (el) {
       el.addEventListener('touchstart', preventDefault, { passive: false })
       el.addEventListener('touchmove', preventDefault, { passive: false })
-    }
-    return () => {
-      el.removeEventListener('touchstart', preventDefault, { passive: false })
-      el.removeEventListener('touchmove', preventDefault, { passive: false })
+      return () => {
+        el.removeEventListener('touchstart', preventDefault, { passive: false })
+        el.removeEventListener('touchmove', preventDefault, { passive: false })
+      }
     }
   }, [ref.current])
   useEffect(() => {
@@ -159,7 +175,10 @@ function WalkThru({ data, tutorialSlug, stepSlug, instructionsStyle }) {
     setPaneHeights(getPaneHeights(hasCode, hasImage))
   }, [step])
   return (
-    <root.div id="shadow-root">
+    <root.div
+      id="shadow-root"
+      style={{ width: '100%', height: '100%', display: 'flex' }}
+    >
       <Wrapper ref={ref}>
         <Cols showCodeMobile={showCodeMobile}>
           <ColLeft>
@@ -169,7 +188,7 @@ function WalkThru({ data, tutorialSlug, stepSlug, instructionsStyle }) {
               steps={instructions}
               title={config.title}
             />
-            <WTContent
+            <WTInstructions
               step={step}
               prevStepSlug={prevStep ? prevStep.slug : null}
               nextStepSlug={nextStep ? nextStep.slug : null}

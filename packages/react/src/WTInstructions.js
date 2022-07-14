@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { useEffect, useRef } from 'react'
 import MarkdownIt from 'markdown-it'
+import Content from './Content.jsx'
 
 const md = new MarkdownIt()
 // Remember old renderer, if overridden, or proxy to default renderer
@@ -86,18 +87,12 @@ function RightArrow({ className }) {
   )
 }
 
-const styleBase = {
-  paddingLeft: '0.25rem',
-  paddingRight: '0.5rem',
-  overflow: 'auto'
-}
-
 const RightArrowStyled = styled(RightArrow)`
   height: 1rem;
   width: 1rem;
 `
 
-function WTContent({ step, nextStepSlug, styles }) {
+function WTInstructions({ step, nextStepSlug, styles }) {
   function next() {
     window.location.hash = nextStepSlug
   }
@@ -110,14 +105,10 @@ function WTContent({ step, nextStepSlug, styles }) {
     ref.current.scrollTo(0, 0)
     setHtml(createHtml(step.content))
   }, [step])
-  const style = styles(styleBase)
   return (
     <Wrapper>
       <ContentWrapper ref={ref}>
-        <div
-          style={style}
-          dangerouslySetInnerHTML={{ __html: html }}
-        ></div>
+        <Content html={html} styles={styles} />
         <ButtonWrapper>
           {nextStepSlug ? (
             <Button onClick={next}>
@@ -133,4 +124,4 @@ function WTContent({ step, nextStepSlug, styles }) {
   )
 }
 
-export default WTContent
+export default WTInstructions

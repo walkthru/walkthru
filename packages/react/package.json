@@ -51,7 +51,8 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-scss": "^3.0.0",
     "styled-components": "^5.3.5",
-    "@emotion/cache": "^11.9.3"
+    "@emotion/cache": "^11.9.3",
+    "@emotion/react": "^11.9.3"
   },
   "peerDependencies": {
     "markdown-it": "^13.0.1",

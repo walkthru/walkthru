@@ -63,7 +63,7 @@ function WTSelect({ tutorialSlug, stepSlug, steps, title }) {
             ...base,
             ...selectStyles,
             boxShadow: 'none',
-            borderColor: 'inherit',
+            borderColor: 'rgb(229, 231, 235)',
           }),
           groupHeading: () => {
             return {
