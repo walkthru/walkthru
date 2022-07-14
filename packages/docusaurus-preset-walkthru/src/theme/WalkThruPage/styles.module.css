@@ -1,0 +1,19 @@
+.page-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  padding: 2rem 0;
+  overflow: hidden;
+}
+
+.wrapper {
+  height: 500px;
+  max-width: 1280px;
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  position: relative;
+}

@@ -10,6 +10,6 @@
     "eslint-plugin-prettier": "^4.0.0"
   },
   "scripts": {
-    "lint": "eslint packages/data/src packages/react/src"
+    "lint": "eslint packages/data/src packages/react/src packages/docusaurus-plugin-walkthru/src"
   }
 }
