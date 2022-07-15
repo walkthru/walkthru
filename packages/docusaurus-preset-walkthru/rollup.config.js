@@ -40,5 +40,5 @@ export default [
       }),
       analyze({ summaryOnly: true })
     ],
-  }
-];
+  },
+]

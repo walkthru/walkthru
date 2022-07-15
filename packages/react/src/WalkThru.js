@@ -100,7 +100,7 @@ function getStepSlugFromHash(config) {
   return step
 }
 
-function WalkThru({ data, tutorialSlug, instructionsStyle }) {
+function WalkThru({ data, name, instructionsStyle }) {
   const { code, instructions, config } = data
   const stepSlug = getStepSlugFromHash(config)
   const stepIndex = instructions.findIndex((step) => step.slug === stepSlug)
@@ -118,7 +118,6 @@ function WalkThru({ data, tutorialSlug, instructionsStyle }) {
   useEffect(() => {
     function hashChange() {
       const stepSlug = getStepSlugFromHash(config)
-      console.log(stepSlug)
       const stepIndex = instructions.findIndex((step) => step.slug === stepSlug)
       setStep(instructions[stepIndex])
       setNextStep(instructions[stepIndex + 1])
@@ -183,7 +182,7 @@ function WalkThru({ data, tutorialSlug, instructionsStyle }) {
         <Cols showCodeMobile={showCodeMobile}>
           <ColLeft>
             <WTSelect
-              tutorialSlug={tutorialSlug}
+              tutorialSlug={name}
               stepSlug={stepSlug}
               steps={instructions}
               title={config.title}

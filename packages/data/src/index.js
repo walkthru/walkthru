@@ -1,5 +1,5 @@
 import { Octokit } from 'octokit'
-import { readFile, access } from 'fs/promises'
+import { readFile, access, readdir } from 'fs/promises'
 import fm from 'front-matter'
 
 async function loadCode(owner, repo, files, ref, ghpat) {
@@ -163,15 +163,23 @@ async function getCode(config, instructions, ghpat) {
   )
 }
 
-async function getData(name, ghpat) {
-  console.log(`Compiling ${name}...`)
-  await checkTutorialExists(name)
-  const config = await loadConfigFile(name)
-  await checkConfigValid(config, name)
-  const instructions = await getInstructions(config.steps, name)
-  const code = await getCode(config, instructions, ghpat)
-  console.log(`Successfully compiled ${name}.`)
-  return { code, instructions, config }
+async function getData({ githubToken }) {
+  const files = await readdir(`${process.cwd()}/walkthru/`, { withFileTypes: true })
+  const dirs = files
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+  const data = []
+  for await (const name of dirs) {
+    console.log(`Compiling ${name}...`)
+    await checkTutorialExists(name)
+    const config = await loadConfigFile(name)
+    await checkConfigValid(config, name)
+    const instructions = await getInstructions(config.steps, name)
+    const code = await getCode(config, instructions, githubToken)
+    console.log(`Successfully compiled ${name}.`)
+    data.push({ name, data: { code, instructions, config } })
+  }
+  return data
 }
 
 export { getData }

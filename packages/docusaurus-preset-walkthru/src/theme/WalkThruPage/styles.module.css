@@ -1,12 +1,11 @@
-.page-wrapper {
-  height: 100vh;
+.layout {
   display: flex;
-  flex-direction: column;
 }
 
 .content-wrapper {
-  padding: 2rem 0;
+  padding: 1rem 0;
   overflow: hidden;
+  width: 100%;
 }
 
 .wrapper {
