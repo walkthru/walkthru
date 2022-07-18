@@ -6,6 +6,8 @@ Check out the [live demo](https://walkthru.netlify.app/walkthru-intro) to see ho
 
 See the [live demo source code](https://github.com/walkthru/next) if you want to see an implementation example using Next.js. 
 
+Follow [on Twitter](https://twitter.com/walkthruapp) for news and updates.
+
 ## Packages
 
 To create a walkthru, you'll need to install these two packages:
