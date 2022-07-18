@@ -4,12 +4,13 @@
     "packages/*"
   ],
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/preset-react": "^7.18.6",
     "eslint": "8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0"
   },
   "scripts": {
-    "lint": "eslint packages/data/src packages/react/src packages/docusaurus-plugin-walkthru/src"
+    "lint": "eslint packages/data/src packages/react/src packages/docusaurus-preset-walkthru/src"
   }
 }

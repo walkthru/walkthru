@@ -4,8 +4,12 @@ import { useState, useEffect } from 'react'
 
 class MyNonceProvider extends NonceProvider {
   createEmotionCache = (nonce) => {
-    return createCache({ nonce, container: this.props.container, key: 'react-select' });
-  };
+    return createCache({
+      nonce,
+      container: this.props.container,
+      key: 'react-select',
+    })
+  }
 }
 
 function WTSelect({ tutorialSlug, stepSlug, steps, title }) {

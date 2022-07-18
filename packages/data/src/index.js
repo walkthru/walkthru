@@ -164,10 +164,12 @@ async function getCode(config, instructions, ghpat) {
 }
 
 async function getData({ githubToken }) {
-  const files = await readdir(`${process.cwd()}/walkthru/`, { withFileTypes: true })
+  const files = await readdir(`${process.cwd()}/walkthru/`, {
+    withFileTypes: true,
+  })
   const dirs = files
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name)
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name)
   const data = []
   for await (const name of dirs) {
     console.log(`Compiling ${name}...`)

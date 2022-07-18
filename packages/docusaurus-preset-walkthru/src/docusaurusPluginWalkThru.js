@@ -1,25 +1,26 @@
-import { getData } from "@walkthru/data"
+import { getData } from '@walkthru/data'
 const path = require('path')
 
 const docusaurusPluginWalkThru = async function (context, options) {
   return {
     name: 'docusaurus-plugin-walkthru',
     async loadContent() {
-      return await getData({ githubToken: options.githubToken})
+      return await getData({ githubToken: options.githubToken })
     },
     async contentLoaded({ content, actions }) {
       const { createData, addRoute, setGlobalData } = actions
-      const tutorials = content.map(item => ({
+      const tutorials = content.map((item) => ({
         path: `/${options.path}/${item.name}`,
-        title: item.data.config.title
+        title: item.data.config.title,
+        order: item.data.config.order,
       }))
       setGlobalData({ tutorials })
       for await (const item of content) {
         const { name } = item
         const dataJsonPath = await createData(
-          'data.json',
-          JSON.stringify(item),
-        );
+          `${name}.json`,
+          JSON.stringify(item)
+        )
         addRoute({
           path: `/${options.path}/${name}`,
           component: '@theme/WalkThruPage',
@@ -27,7 +28,7 @@ const docusaurusPluginWalkThru = async function (context, options) {
             config: dataJsonPath,
           },
           exact: true,
-        });
+        })
       }
     },
     configureWebpack(config, isServer, utils) {
@@ -36,9 +37,9 @@ const docusaurusPluginWalkThru = async function (context, options) {
         resolve: {
           alias: {
             react: path.resolve(nm, 'react'),
-            'react-dom': path.resolve(nm, 'react-dom')
-          }
-        }
+            'react-dom': path.resolve(nm, 'react-dom'),
+          },
+        },
       }
     },
     getPathsToWatch() {
@@ -46,7 +47,7 @@ const docusaurusPluginWalkThru = async function (context, options) {
       return [`${contentPath}/**/*.{md,json}`]
     },
     /* other lifecycle API */
-  };
-};
+  }
+}
 
 export default docusaurusPluginWalkThru

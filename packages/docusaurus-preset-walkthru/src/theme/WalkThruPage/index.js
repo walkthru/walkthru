@@ -6,8 +6,8 @@ import Layout from '@theme/Layout'
 import styles from './styles.module.css'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Head from '@docusaurus/Head'
-import Sidebar from "./sidebar"
-import {usePluginData} from '@docusaurus/useGlobalData'
+import Sidebar from './sidebar'
+import { usePluginData } from '@docusaurus/useGlobalData'
 
 export default function WalkThruPage({ config }) {
   const { siteConfig } = useDocusaurusContext()
@@ -25,14 +25,19 @@ export default function WalkThruPage({ config }) {
             <div className="container container-fluid">
               <div className="row">
                 <div className="col">
-                  <ErrorBoundary fallback={({ error, tryAgain }) => (
-                    <div>
-                      <p>This component crashed because of error: {error.message}.</p>
-                      <button onClick={tryAgain}>Try Again!</button>
-                    </div>
-                  )}>
+                  <ErrorBoundary
+                    fallback={({ error, tryAgain }) => (
+                      <div>
+                        <p>
+                          This component crashed because of error:{' '}
+                          {error.message}.
+                        </p>
+                        <button onClick={tryAgain}>Try Again!</button>
+                      </div>
+                    )}
+                  >
                     <BrowserOnly>
-                      {() =>
+                      {() => (
                         <div className={styles['wrapper']}>
                           <WalkThru
                             {...config}
@@ -42,7 +47,7 @@ export default function WalkThruPage({ config }) {
                           `}
                           />
                         </div>
-                      }
+                      )}
                     </BrowserOnly>
                   </ErrorBoundary>
                 </div>

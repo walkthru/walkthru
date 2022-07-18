@@ -3,12 +3,8 @@ import docusaurusThemeWalkThru from './docusaurusThemeWalkThru'
 
 function docusaurusPresetWalkThru(context, options = {}) {
   return {
-    themes: [
-      async () => docusaurusThemeWalkThru(context, options)
-    ],
-    plugins: [
-      async () => docusaurusPluginWalkThru(context, options)
-    ],
+    themes: [async () => docusaurusThemeWalkThru(context, options)],
+    plugins: [async () => docusaurusPluginWalkThru(context, options)],
   }
 }
 

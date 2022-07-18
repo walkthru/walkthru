@@ -4,7 +4,7 @@ import externals from 'rollup-plugin-node-externals'
 import json from "@rollup/plugin-json";
 const analyze = require('rollup-plugin-analyzer')
 import babel from 'rollup-plugin-babel';
-import copy from 'rollup-plugin-copy'
+import copy from '@guanghechen/rollup-plugin-copy'
 
 const packageJson = require("./package.json");
 
