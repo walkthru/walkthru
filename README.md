@@ -10,7 +10,7 @@ Follow [on Twitter](https://twitter.com/walkthruapp) for news and updates.
 
 Either use this:
 
-- **WalkThru Docusaurus Preset** for installing in a Docusaurus site.
+- **WalkThru Docusaurus preset** for installing in a Docusaurus site.
 
 Or both of these:
 
