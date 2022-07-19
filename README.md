@@ -2,13 +2,20 @@
 
 **WalkThru is a better way of explaining code on the web.**
 
+![WalkThru demo](https://media.giphy.com/media/A4McguuzE9AApZNZel/giphy.gif)
+
 Check out the [Next.js demo](https://walkthru.netlify.app/walkthru-intro) or the [Docusaurus demo](https://walkthru-docusaurus.netlify.app/guides/walkthru-intro) to see how it works.
 
 Follow [on Twitter](https://twitter.com/walkthruapp) for news and updates.
 
 ## Packages
 
-- **WalkThru Docusaurus Preset** for installing in a Docusaurus site.
+Either use this:
+
+- **WalkThru Docusaurus preset** for installing in a Docusaurus site.
+
+Or both of these:
+
 - **WalkThru data module** for compiling a tutorial from markdown files.
 - **WalkThru React component** for displaying a tutorial in your site or app.
 
@@ -16,7 +23,8 @@ Follow [on Twitter](https://twitter.com/walkthruapp) for news and updates.
 
 The easiest way to use WalkThru is to add it to your Docusaurus site as a preset. If you do this, you won't need to use the data module and React component. 
 
-Installation and configuration instructions can be found [here](https://walkthru-docusaurus.netlify.app/guides/installing-walkthru).
+- Installation and configuration instructions can be found [here](https://walkthru-docusaurus.netlify.app/guides/installing-walkthru). 
+- An example implementation can be found [here](https://github.com/walkthru/docusaurus-demo).
 
 ## WalkThru data module
 
@@ -68,11 +76,11 @@ function App () {
   return (
     <WalkThru
       data={data}
-      tutorialSlug={tutorialSlug}
-      stepSlug={stepSlug}
-      classes={{
-        instructions: ''
-      }}
+      slug={slug}
+      instructionsStyle={(base) => `
+        ${base}
+        font-size: 16px;
+      `} 
     />
   )
 }
@@ -81,24 +89,12 @@ function App () {
 ### Props
 
 - `data`. Returned from `getData`.
-- `tutorialSlug`. The slug of the current tutorial e.g. `my-tutorial`.
-- `stepSlug`. The slug of the current step e.g. `introduction`.
-- `instructionStyle`. An callback function that allows you to style the instructions using React Emotion. The callback has a parameter `base`. 
-
-```html
-<WalkThru
-  instructionsStyle={
-    (base) => `
-      ${base}
-      font-size: 16px;
-    `
-  } 
-/>
-```
+- `slug`. The slug of the current tutorial e.g. `my-tutorial`.
+- `instructionStyle`. An callback function that allows you to style the instructions section. Return a template string with your desired CSS.
 
 ### Tips
 
-- Don't server render this component.
+- Don't server render this component as it uses browser objects like `window`.
 - The step and tutorial slugs will be dynamic segments of the URL. e.g. `https://myapp.com/{tutorial-slug}#{step-slug}`.
 
 ## Creating a WalkThru
