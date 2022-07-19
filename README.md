@@ -73,8 +73,7 @@ function App () {
   return (
     <WalkThru
       data={data}
-      tutorialSlug={tutorialSlug}
-      stepSlug={stepSlug}
+      slug={slug}
       instructionsStyle={(base) => `
         ${base}
         font-size: 16px;
@@ -87,8 +86,7 @@ function App () {
 ### Props
 
 - `data`. Returned from `getData`.
-- `tutorialSlug`. The slug of the current tutorial e.g. `my-tutorial`.
-- `stepSlug`. The slug of the current step e.g. `introduction`.
+- `slug`. The slug of the current tutorial e.g. `my-tutorial`.
 - `instructionStyle`. An callback function that allows you to style the instructions section. Return a template string with your desired CSS.
 
 ### Tips
