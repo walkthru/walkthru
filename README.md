@@ -21,7 +21,8 @@ Or both of these:
 
 A great way to use WalkThru is to add it to your Docusaurus site as a preset. 
 
-Installation and configuration instructions can be found [here](https://walkthru-docusaurus.netlify.app/guides/installing-walkthru).
+- Installation and configuration instructions can be found [here](https://walkthru-docusaurus.netlify.app/guides/installing-walkthru). 
+- An example implementation can be found [here](https://github.com/walkthru/docusaurus-demo).
 
 ## WalkThru data module
 
