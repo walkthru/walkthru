@@ -2,7 +2,7 @@
 
 **WalkThru is a better way of explaining code on the web.**
 
-![](https://github.com/walkthru/walkthru/blob/v0.2/redditsave.com_i_created_walkthru_a_better_way_to_explain_your-zvkidnz88w891.mp4)
+![WalkThru demo](https://media.giphy.com/media/A4McguuzE9AApZNZel/giphy.gif)
 
 Check out the [Next.js demo](https://walkthru.netlify.app/walkthru-intro) or the [Docusaurus demo](https://walkthru-docusaurus.netlify.app/guides/walkthru-intro) to see how it works.
 
