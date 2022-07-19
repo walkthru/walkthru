@@ -10,19 +10,19 @@ const docusaurusPluginWalkThru = async function (context, options) {
     async contentLoaded({ content, actions }) {
       const { createData, addRoute, setGlobalData } = actions
       const tutorials = content.map((item) => ({
-        path: `/${options.path}/${item.name}`,
+        path: `/${options.path}/${item.slug}`,
         title: item.data.config.title,
         order: item.data.config.order,
       }))
       setGlobalData({ tutorials })
       for await (const item of content) {
-        const { name } = item
+        const { slug } = item
         const dataJsonPath = await createData(
-          `${name}.json`,
+          `${slug}.json`,
           JSON.stringify(item)
         )
         addRoute({
-          path: `/${options.path}/${name}`,
+          path: `/${options.path}/${slug}`,
           component: '@theme/WalkThruPage',
           modules: {
             config: dataJsonPath,

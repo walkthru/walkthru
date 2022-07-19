@@ -42,9 +42,9 @@ export default function WalkThruPage({ config }) {
                           <WalkThru
                             {...config}
                             instructionsStyle={(base) => `
-                            ${base}
-                            font-size: 16px;
-                          `}
+                              ${base}
+                              font-size: 16px;
+                            `}
                           />
                         </div>
                       )}

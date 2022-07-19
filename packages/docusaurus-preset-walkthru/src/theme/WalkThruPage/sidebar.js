@@ -14,7 +14,7 @@ function Sidebar({ tutorials }) {
               >
                 <a
                   className={`menu__link ${
-                    window.location.pathname === item.path
+                    typeof window !== 'undefined' && window.location.pathname === item.path
                       ? 'menu__link--active'
                       : ''
                   }`}

@@ -100,7 +100,7 @@ function getStepSlugFromHash(config) {
   return step
 }
 
-function WalkThru({ data, name, instructionsStyle }) {
+function WalkThru({ data, slug, instructionsStyle }) {
   const { code, instructions, config } = data
   const stepSlug = getStepSlugFromHash(config)
   const stepIndex = instructions.findIndex((step) => step.slug === stepSlug)
@@ -182,7 +182,7 @@ function WalkThru({ data, name, instructionsStyle }) {
         <Cols showCodeMobile={showCodeMobile}>
           <ColLeft>
             <WTSelect
-              tutorialSlug={name}
+              tutorialSlug={slug}
               stepSlug={stepSlug}
               steps={instructions}
               title={config.title}

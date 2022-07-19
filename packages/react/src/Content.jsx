@@ -13,7 +13,7 @@ const styleBase = `
 `
 
 function Content ({ html, styles }) {
-  const style = css`${styles(styleBase)}`
+  const style = typeof styles === 'function' ? css`${styles(styleBase)}` : css`${styleBase}`
   const shadowRootNode = document.querySelector('#shadow-root').shadowRoot
   const myCache = createCache({
     key: 'walkthru-content',

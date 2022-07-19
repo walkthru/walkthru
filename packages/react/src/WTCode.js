@@ -10,6 +10,9 @@ const Pre = styled.pre`
   margin: 0;
   padding: 0;
   border-radius: 0.25rem;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Code = styled.code`

@@ -171,15 +171,15 @@ async function getData({ githubToken }) {
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name)
   const data = []
-  for await (const name of dirs) {
-    console.log(`Compiling ${name}...`)
-    await checkTutorialExists(name)
-    const config = await loadConfigFile(name)
-    await checkConfigValid(config, name)
-    const instructions = await getInstructions(config.steps, name)
+  for await (const slug of dirs) {
+    console.log(`Compiling ${slug}...`)
+    await checkTutorialExists(slug)
+    const config = await loadConfigFile(slug)
+    await checkConfigValid(config, slug)
+    const instructions = await getInstructions(config.steps, slug)
     const code = await getCode(config, instructions, githubToken)
-    console.log(`Successfully compiled ${name}.`)
-    data.push({ name, data: { code, instructions, config } })
+    console.log(`Successfully compiled ${slug}.`)
+    data.push({ slug, data: { code, instructions, config } })
   }
   return data
 }

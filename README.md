@@ -14,7 +14,7 @@ Follow [on Twitter](https://twitter.com/walkthruapp) for news and updates.
 
 ## WalkThru Docusaurus preset
 
-A great way to use WalkThru is to add it to your Docusaurus site as a preset. 
+The easiest way to use WalkThru is to add it to your Docusaurus site as a preset. If you do this, you won't need to use the data module and React component. 
 
 Installation and configuration instructions can be found [here](https://walkthru-docusaurus.netlify.app/guides/installing-walkthru).
 
