@@ -94,7 +94,7 @@ function App () {
 
 ### Tips
 
-- Don't server render this component.
+- Don't server render this component as it uses browser objects like `window`.
 - The step and tutorial slugs will be dynamic segments of the URL. e.g. `https://myapp.com/{tutorial-slug}#{step-slug}`.
 
 ## Creating a WalkThru
