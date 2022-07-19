@@ -8,7 +8,12 @@ Follow [on Twitter](https://twitter.com/walkthruapp) for news and updates.
 
 ## Packages
 
+Either use this:
+
 - **WalkThru Docusaurus Preset** for installing in a Docusaurus site.
+
+Or both of these:
+
 - **WalkThru data module** for compiling a tutorial from markdown files.
 - **WalkThru React component** for displaying a tutorial in your site or app.
 
@@ -70,9 +75,10 @@ function App () {
       data={data}
       tutorialSlug={tutorialSlug}
       stepSlug={stepSlug}
-      classes={{
-        instructions: ''
-      }}
+      instructionsStyle={(base) => `
+        ${base}
+        font-size: 16px;
+      `} 
     />
   )
 }
@@ -83,18 +89,7 @@ function App () {
 - `data`. Returned from `getData`.
 - `tutorialSlug`. The slug of the current tutorial e.g. `my-tutorial`.
 - `stepSlug`. The slug of the current step e.g. `introduction`.
-- `instructionStyle`. An callback function that allows you to style the instructions using React Emotion. The callback has a parameter `base`. 
-
-```html
-<WalkThru
-  instructionsStyle={
-    (base) => `
-      ${base}
-      font-size: 16px;
-    `
-  } 
-/>
-```
+- `instructionStyle`. An callback function that allows you to style the instructions section. Return a template string with your desired CSS.
 
 ### Tips
 
